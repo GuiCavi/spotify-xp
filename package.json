@@ -1,0 +1,11 @@
+{
+  "name": "spotify-xp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "author": "Guilherme Vincenzi Cavichioli",
+  "private": true,
+  "scripts": {
+    "test": "jest"
+  }
+}
