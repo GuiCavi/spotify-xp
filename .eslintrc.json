@@ -24,9 +24,14 @@
       2
     ],
     "react/function-component-definition": [
-      2,
+      "error",
       {
-        "namedComponents": "function-declaration"
+        "namedComponents": [
+          "function-declaration",
+          "function-expression",
+          "arrow-function"
+        ],
+        "unnamedComponents": "function-expression"
       }
     ],
     "react/react-in-jsx-scope": "off",
@@ -40,5 +45,47 @@
         "functions": "never"
       }
     ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "object-curly-newline": [
+      "error",
+      {
+        "minProperties": 3,
+        "multiline": true
+      }
+    ],
+    "quotes": [
+      "error",
+      "double"
+    ],
+    "import/prefer-default-export": "off",
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "order": "asc"
+        },
+        "newlines-between": "always",
+        "groups": [
+          [
+            "builtin"
+          ],
+          [
+            "external"
+          ],
+          [
+            "parent"
+          ],
+          [
+            "sibling"
+          ],
+          "object",
+          "type",
+          "index"
+        ]
+      }
+    ]
   }
 }
