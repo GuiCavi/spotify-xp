@@ -1,51 +1,51 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+require("dotenv").config();
+
+const path = require("path");
+
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
 
 const isProduction = false;
 const isDevelopment = !isProduction;
 
 module.exports = {
-  mode: 'development',
+  mode: "development",
   devtool: isDevelopment && "cheap-module-source-map",
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "assets/js/[name].[contenthash:8].js",
-    publicPath: "/"
+    publicPath: "/",
   },
-  devServer: {
-    port: 3000
-  },
+  devServer: { port: 3000 },
   module: {
     rules: [
       {
         test: /\.scss$/,
         use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
+          "style-loader",
+          "css-loader",
+          "sass-loader",
+        ],
       },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
             cacheDirectory: true,
             cacheCompression: false,
-            envName: isProduction ? "production" : "development"
-          }
-        }
-      }
-    ]
+            envName: isProduction ? "production" : "development",
+          },
+        },
+      },
+    ],
   },
-  resolve: {
-    extensions: ['.js', '.jsx']
-  },
+  resolve: { extensions: [".js", ".jsx"] },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './public/index.html'
-    })
+    new HtmlWebpackPlugin({ template: "./public/index.html" }),
+    new webpack.EnvironmentPlugin(["NODE_ENV", "API_KEY"]),
+
   ],
-}
+};
