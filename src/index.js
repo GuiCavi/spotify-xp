@@ -1,9 +1,7 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
-
-import "./styles.scss";
+import { makeApp } from './main/makers/make-app';
 
 ReactDOM.render(
-  <h1>Hello, world!</h1>,
+  makeApp(),
   document.getElementById('root')
 );
