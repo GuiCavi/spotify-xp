@@ -17,7 +17,7 @@ module.exports = {
     filename: "assets/js/[name].[contenthash:8].js",
     publicPath: "/",
   },
-  devServer: { port: 3000 },
+  devServer: { port: 3000, historyApiFallback: true },
   module: {
     rules: [
       {
@@ -45,7 +45,11 @@ module.exports = {
   resolve: { extensions: [".js", ".jsx"] },
   plugins: [
     new HtmlWebpackPlugin({ template: "./public/index.html" }),
-    new webpack.EnvironmentPlugin(["NODE_ENV", "API_KEY"]),
-
+    new webpack.EnvironmentPlugin([
+      "NODE_ENV",
+      "CLIENT_ID",
+      "CLIENT_SECRET",
+      "SPOTIFY_CALLBACK_URI",
+    ]),
   ],
 };
