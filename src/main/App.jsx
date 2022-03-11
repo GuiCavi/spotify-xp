@@ -1,12 +1,18 @@
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { initAuth, useToken } from "../redux/slices/Auth";
+import requester from "../infra/http/Requester";
+import { setData, useToken } from "../redux/slices/Auth";
 import { AppRouter, UnauthorizedRouter } from "../routes";
 import "../styles.scss";
 
 const App = () => {
   const dispatch = useDispatch();
-  dispatch(initAuth());
+  const authData = localStorage.getItem("auth_data");
+
+  if (authData) {
+    dispatch(setData(JSON.parse(authData)));
+  }
 
   return <AppContainer />;
 };
@@ -14,9 +20,13 @@ const App = () => {
 const AppContainer = () => {
   const token = useToken();
 
-  const hasToken = !!token;
+  useEffect(() => {
+    if (token) {
+      requester.setToken(token);
+    }
+  }, [token]);
 
-  return hasToken ? <AppRouter /> : <UnauthorizedRouter />;
+  return token ? <AppRouter /> : <UnauthorizedRouter />;
 };
 
 export default App;
