@@ -1,0 +1,36 @@
+@import "../../styles/global";
+
+.AlbumTracks {
+  width: 100%;
+
+  >li {
+    counter-increment: trackIndex;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px 0;
+
+    &::before {
+      content: counter(trackIndex)".";
+      @extend .Text,
+      .caption;
+      width: 25px;
+      text-align: left;
+    }
+  }
+
+  .TrackName {
+    flex: 1;
+    @extend .Text,
+    .caption-emphasis;
+
+    text-align: left;
+  }
+
+  .TrackDuration {
+    @extend .Text,
+    .caption;
+  }
+}
