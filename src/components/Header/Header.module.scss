@@ -1,0 +1,20 @@
+@import "../../styles/global";
+
+.Header {
+  padding: 24px 0;
+
+  a {
+    fill: $color-white;
+    text-decoration: none;
+    color: #fff;
+
+    &:hover {
+      opacity: 0.5;
+    }
+
+    >svg {
+      @include dim(12px);
+      margin-right: 6px;
+    }
+  }
+}
