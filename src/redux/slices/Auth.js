@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 
 const getTheTimeItExpires = (duration, fromDate) => {
@@ -33,12 +33,29 @@ const AuthSlice = createSlice({
       state.isExpired = new Date() > expirationTime;
       state.loginAt = action.payload.login_at;
     },
+    clear: (state) => {
+      state.token = "";
+      state.expiresIn = "";
+      state.tokenType = "";
+      state.isExpired = false;
+      state.loginAt = "";
+    },
   },
 });
 
-export const { setToken, setData } = AuthSlice.actions;
+export const {
+  setToken, setData, clear,
+} = AuthSlice.actions;
 
 export default AuthSlice.reducer;
 
 export const useAuth = () => useSelector((state) => state.auth);
 export const useToken = () => useSelector((state) => state.auth.token);
+
+export const logoutAsync = createAsyncThunk(
+  "auth/logout",
+  async (_, { dispatch }) => {
+    localStorage.removeItem("auth_data");
+    dispatch(clear());
+  }
+);
