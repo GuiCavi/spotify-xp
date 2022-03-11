@@ -9,10 +9,11 @@ import { logoutAsync } from "./Auth";
 const SearchSlice = createSlice({
   name: "search",
   initialState: {
-    searchResults: [],
+    searchResults: {},
     searchQuery: "",
     searchError: null,
     searchLoading: false,
+    selectedAlbumTracks: null,
   },
   reducers: {
     setSearchQuery: (state, action) => {
@@ -22,8 +23,10 @@ const SearchSlice = createSlice({
       state.searchResults = action.payload;
     },
     clearSearch: (state) => {
-      state.searchResults = [];
       state.searchQuery = "";
+    },
+    clearTracks: (state) => {
+      state.selectedAlbumTracks = null;
     },
   },
   extraReducers: (builder) => {
@@ -33,26 +36,44 @@ const SearchSlice = createSlice({
       })
       .addCase(searchByQueryString.fulfilled, (state, action) => {
         state.searchLoading = false;
-        state.searchResults = action.payload;
+        state.searchResults = {
+          ...state.searchResults,
+          [state.searchQuery]: action.payload,
+        };
+      })
+      .addCase(getTracksByAlbumId.pending, (state) => {
+        state.searchLoading = true;
+      })
+      .addCase(getTracksByAlbumId.fulfilled, (state, action) => {
+        state.searchLoading = false;
+        state.selectedAlbumTracks = action.payload;
       });
   },
 });
 
 export const {
-  setSearchQuery, setSearchResults, clearSearch,
+  setSearchQuery, setSearchResults, clearSearch, clearTracks,
 } = SearchSlice.actions;
 
 export default SearchSlice.reducer;
 
 export const useSearchResults = () => useSelector((state) => state.search.searchResults);
 export const useSearchLoading = () => useSelector((state) => state.search.searchLoading);
-export const useAlbums = () => useSelector((state) => state.search.searchResults.albums);
-export const useTracks = () => useSelector((state) => state.search.searchResults.tracks);
+export const useAlbums = (query) => useSelector(
+  (state) => state.search.searchResults[query]?.albums
+);
+export const useTracks = (query) => useSelector(
+  (state) => state.search.searchResults[query]?.tracks
+);
+export const useSelectedAlbumTracks = () => useSelector(
+  (state) => state.search.selectedAlbumTracks
+);
+export const useSearchQuery = () => useSelector((state) => state.search.searchQuery);
 
 export const searchByQueryString = createAsyncThunk(
   "search/searchByQueryString",
   async (query, { dispatch, getState }) => {
-    const { searchQuery } = getState().search;
+    const { searchResults } = getState().search;
     const { expiresIn, loginAt } = getState().auth;
 
     const token = new Token(expiresIn, loginAt);
@@ -62,8 +83,8 @@ export const searchByQueryString = createAsyncThunk(
       return {};
     }
 
-    if (query === searchQuery) {
-      return {};
+    if (searchResults[query]) {
+      return searchResults[query];
     }
 
     dispatch(setSearchQuery(query));
@@ -74,6 +95,27 @@ export const searchByQueryString = createAsyncThunk(
     params.append("limit", "5");
 
     const response = await requester.get("/search", params);
+
+    return response.data;
+  }
+);
+
+export const getTracksByAlbumId = createAsyncThunk(
+  "search/getTracksByAlbumId",
+  async (albumId, { dispatch, getState }) => {
+    const { expiresIn, loginAt } = getState().auth;
+
+    const token = new Token(expiresIn, loginAt);
+
+    if (token.isTokenExpired()) {
+      dispatch(logoutAsync());
+      return {};
+    }
+
+    const params = new URLSearchParams();
+    params.append("market", "BR");
+
+    const response = await requester.get(`/albums/${albumId}/tracks`, params);
 
     return response.data;
   }
