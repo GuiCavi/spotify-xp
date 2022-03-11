@@ -1,0 +1,14 @@
+@import "../../styles/global";
+
+.Logo {
+  position: fixed;
+  top: 32px;
+  left: 32px;
+  @include dim(32px);
+
+  @media screen and (max-width: 576px) {
+    position: relative;
+    top: unset;
+    left: unset;
+  }
+}
