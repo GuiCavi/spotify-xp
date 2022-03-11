@@ -20,6 +20,7 @@ const App = () => {
       dispatch(logoutAsync());
     } else {
       dispatch(setData(data));
+      requester.setToken(data.access_token);
     }
   }
 
