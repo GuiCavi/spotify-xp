@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import {
@@ -7,23 +7,22 @@ import {
 import { useDebounce } from "../hooks/useDebounce";
 import {
   clearSearch,
-  searchByQueryString, useAlbums, useTracks,
+  searchByQueryString, useAlbums, useSearchQuery, useTracks,
 } from "../redux/slices/Search";
-
-import styles from "./styles/Home.module.scss";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const [queryString, setQueryString] = useState("");
+  const initialQueryString = useSearchQuery();
+  const [queryString, setQueryString] = useState(initialQueryString);
   const debounceQueryString = useDebounce(queryString, 500);
 
-  const albums = useAlbums();
-  const tracks = useTracks();
+  const albums = useAlbums(debounceQueryString);
+  const tracks = useTracks(debounceQueryString);
 
   useEffect(() => {
     if (debounceQueryString.length > 0) {
       dispatch(searchByQueryString(debounceQueryString));
-    } else {
+    } else if (initialQueryString.length > 0) {
       dispatch(clearSearch());
     }
   }, [debounceQueryString]);
@@ -32,22 +31,24 @@ const Home = () => {
     ? `Resultados encontrados para "${debounceQueryString}"`
     : "Álbuns buscados recentemente";
 
+  const searchResults = albums?.items.concat(tracks?.items);
+
   return (
-    <div className={styles.Container}>
-      <main className={styles.MainContent}>
-        <SearchInput value={queryString} onChange={setQueryString} />
+    <>
+      <SearchInput value={queryString} onChange={setQueryString} />
 
-        <h3 className="Text heading">{resultsTest}</h3>
+      <h3 className="Text heading">{resultsTest}</h3>
 
-        <HorizontalList>
-          {
-            albums?.items.concat(tracks?.items).map((album) => (
-              <SearchCard searchItem={album} />
-            ))
-          }
-        </HorizontalList>
-      </main>
-    </div>
+      <HorizontalList>
+        {
+          searchResults?.map((album) => (
+            <SearchCard
+              searchItem={album}
+            />
+          ))
+        }
+      </HorizontalList>
+    </>
   );
 };
 
