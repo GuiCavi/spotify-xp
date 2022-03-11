@@ -1,0 +1,15 @@
+@import "../../styles/global";
+
+.AlbumContent {
+  display: flex;
+  gap: 48px;
+}
+
+.AlbumAside {
+  flex: 0 0 250px;
+
+  a {
+    pointer-events: none;
+    cursor: default;
+  }
+}
