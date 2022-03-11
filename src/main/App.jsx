@@ -1,17 +1,26 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
+import { Token } from "../data/usecases/Token";
 import requester from "../infra/http/Requester";
-import { setData, useToken } from "../redux/slices/Auth";
+import {
+  logoutAsync, setData, useToken,
+} from "../redux/slices/Auth";
 import { AppRouter, UnauthorizedRouter } from "../routes";
-import "../styles.scss";
 
 const App = () => {
   const dispatch = useDispatch();
   const authData = localStorage.getItem("auth_data");
 
   if (authData) {
-    dispatch(setData(JSON.parse(authData)));
+    const data = JSON.parse(authData);
+
+    const token = new Token(data.expires_in, data.login_at);
+    if (token.isTokenExpired()) {
+      dispatch(logoutAsync());
+    } else {
+      dispatch(setData(data));
+    }
   }
 
   return <AppContainer />;
