@@ -1,12 +1,16 @@
 @import "../../styles/global.scss";
 
-.AlbumCard {
+.SearchCard {
   flex: 0 0 180px;
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  .AlbumCover {
+  @media screen and (max-width: 576px) {
+    flex: 0 0 100%;
+  }
+
+  .Cover {
     width: 100%;
     height: auto;
 
@@ -15,14 +19,14 @@
     }
   }
 
-  .AlbumInfo {
+  .Info {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 12px 0 24px;
     gap: 12px;
 
-    .AlbumName {
+    .Name {
       @extend .Text,
       .caption-emphasis;
     }
@@ -32,4 +36,5 @@
       .caption;
     }
   }
+
 }
