@@ -1,0 +1,8 @@
+@mixin dim($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+@function to-rem($px) {
+  @return ($px / 16) * 1rem;
+}
