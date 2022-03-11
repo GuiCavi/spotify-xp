@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
+import { Link } from "react-router-dom";
 
 import styles from "./SearchCard.module.scss";
 
@@ -18,15 +19,26 @@ const getImagesByType = (item) => {
 const SearchCard = ({ searchItem }) => {
   const images = getImagesByType(searchItem);
 
+  const {
+    id,
+    name,
+    type,
+    artists,
+  } = searchItem;
+
+  const redirectTo = `/albums/${encodeURI(artists[0].name)}`;
+
   return (
-    <div className={styles.SearchCard} key={searchItem.id}>
-      <div className={styles.Cover}>
-        <img src={images[0]?.url} alt={`${searchItem.type} name ${searchItem.name}`} />
-      </div>
-      <div className={styles.Info}>
-        <span className={styles.Name}>{searchItem.name}</span>
-        <span className={styles.ArtistName}>{searchItem.artists[0].name}</span>
-      </div>
+    <div className={styles.SearchCard} key={id}>
+      <Link to={redirectTo} state={searchItem}>
+        <div className={styles.Cover}>
+          <img src={images[0]?.url} alt={`${type} name ${name}`} />
+        </div>
+        <div className={styles.Info}>
+          <span className={styles.Name}>{name}</span>
+          <span className={styles.ArtistName}>{artists[0].name}</span>
+        </div>
+      </Link>
     </div>
   );
 };
