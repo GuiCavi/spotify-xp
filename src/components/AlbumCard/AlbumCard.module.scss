@@ -1,0 +1,35 @@
+@import "../../styles/global.scss";
+
+.AlbumCard {
+  flex: 0 0 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .AlbumCover {
+    width: 100%;
+    height: auto;
+
+    >img {
+      width: 100%;
+    }
+  }
+
+  .AlbumInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 0 24px;
+    gap: 12px;
+
+    .AlbumName {
+      @extend .Text,
+      .caption-emphasis;
+    }
+
+    .ArtistName {
+      @extend .Text,
+      .caption;
+    }
+  }
+}
