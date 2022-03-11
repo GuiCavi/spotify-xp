@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
 
+import "./SearchInput.module.scss";
+
 const SearchInput = ({ value, onChange }) => {
   const handleChange = (e) => {
     onChange(e.target.value);
