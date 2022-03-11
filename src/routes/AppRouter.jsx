@@ -2,13 +2,17 @@ import {
   Navigate, Route, Routes,
 } from "react-router-dom";
 
-import { Home } from "../pages";
+import { Layout } from "../components";
+import { Home, Album } from "../pages";
 
 const AppRouter = () => (
-  <Routes>
-    <Route path="/" element={<Home />} />
-    <Route path="*" element={<Navigate to="/" />} />
-  </Routes>
+  <Layout>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/albums/:artist" element={<Album />} />
+      <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
+  </Layout>
 );
 
 export default AppRouter;
