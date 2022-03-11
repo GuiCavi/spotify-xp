@@ -16,8 +16,13 @@ const AuthSpotifyLogin = () => {
       // TODO: Show error
       console.log(error);
     } else {
-      localStorage.setItem("auth_data", JSON.stringify(spotifyAuthData));
-      dispatch(setData(spotifyAuthData));
+      const saveData = {
+        ...spotifyAuthData,
+        login_at: +new Date(),
+      };
+
+      localStorage.setItem("auth_data", JSON.stringify(saveData));
+      dispatch(setData(saveData));
     }
     setTimeout(() => navigate("/"), 1500);
   }, []);
