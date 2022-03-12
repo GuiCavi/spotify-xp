@@ -10,7 +10,7 @@
     align-items: center;
     gap: 10px;
 
-    padding: 12px 0;
+    padding: 12px 6px;
 
     &::before {
       content: counter(trackIndex)".";
@@ -20,11 +20,14 @@
       text-align: left;
     }
   }
+}
 
+.TrackItem {
   .TrackName {
     flex: 1;
     @extend .Text,
     .caption-emphasis;
+    font-weight: 400;
 
     text-align: left;
   }
@@ -32,5 +35,14 @@
   .TrackDuration {
     @extend .Text,
     .caption;
+  }
+
+  &.TrackItemSelected {
+    background-color: $color-black;
+
+    .TrackName {
+      color: $color-green;
+      font-weight: 900;
+    }
   }
 }
