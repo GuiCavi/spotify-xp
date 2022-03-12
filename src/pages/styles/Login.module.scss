@@ -1,0 +1,60 @@
+@import "../../styles/global";
+
+$button-height: 40px;
+
+.LoginContainer {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 40px;
+
+  .LoginTitle {
+    @extend .Text,
+    .title;
+    text-align: center;
+
+    color: $color-white;
+  }
+
+  .LoginOnboarding {
+    @extend .Text,
+    .section-title,
+    .center;
+  }
+
+  .TextContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+}
+
+.Button {
+  background-color: $button-primary;
+  border-color: $button-primary;
+  color: #fff;
+  border: 0;
+  outline: 0;
+  height: $button-height;
+  width: 100%;
+  cursor: pointer;
+
+  padding: 12px 24px;
+  border-radius: $button-height / 2;
+
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: darken($button-primary, 5%);
+    border-color: darken($button-primary, 5%);
+    color: #fff;
+  }
+}

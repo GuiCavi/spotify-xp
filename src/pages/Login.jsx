@@ -1,4 +1,7 @@
+import PropTypes from "prop-types";
 import { useCallback } from "react";
+
+import styles from "./styles/Login.module.scss";
 
 const spotifyCallbackUrl = process.env.SPOTIFY_CALLBACK_URI;
 const sporifyAuthUrl = `https://accounts.spotify.com/authorize?client_id=${process.env.CLIENT_ID}&response_type=token&redirect_uri=${spotifyCallbackUrl}`;
@@ -9,12 +12,27 @@ const LoginPage = () => {
   });
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div className={styles.LoginContainer}>
+      <div className={styles.TextContainer}>
+        <h1 className={styles.LoginTitle}>Bem-vindo ao XPotify</h1>
 
-      <button type="submit" onClick={handleLoginSpotify}>Entrar</button>
+        <h4 className={styles.LoginOnboarding}>
+          Cansamos de só investir, agora tocamos música também.
+        </h4>
+      </div>
+
+      <Button type="submit" onClick={handleLoginSpotify}>Entrar</Button>
     </div>
   );
+};
+
+const Button = ({ children, onClick }) => (
+  <button className={styles.Button} type="submit" onClick={onClick}>{children}</button>
+);
+
+Button.propTypes = {
+  children: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default LoginPage;
