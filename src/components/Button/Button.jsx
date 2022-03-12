@@ -3,8 +3,10 @@ import React from "react";
 
 import styles from "./Button.module.scss";
 
-const Button = ({ children, onClick }) => (
-  <button className={styles.Button} type="submit" onClick={onClick}>{children}</button>
+const Button = ({
+  children, onClick, className,
+}) => (
+  <button className={[styles.Button, className].join(" ")} type="submit" onClick={onClick}>{children}</button>
 );
 
 Button.propTypes = {
