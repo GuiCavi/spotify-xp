@@ -1,0 +1,76 @@
+@import "../../styles/global";
+
+.PlayerContainer {
+  height: $player-height;
+  padding: 0 24px;
+  background-color: $color-black;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  transform: translateY(0);
+  animation: upPlayer .4s ease-in-out;
+
+  .PlayerButtons {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .CurrentSongInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    flex: 1;
+
+    .CurrentSongTitle {
+      @extend .Text,
+      .caption-emphasis;
+    }
+
+    .CurrentSongArtist {
+      @extend .Text,
+      .caption;
+    }
+  }
+
+  .AudioTag {
+    display: none;
+  }
+}
+
+.PlayerButton {
+  @include dim(40px);
+  border-radius: 50%;
+  background-color: $color-ice;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &.Inverted {
+    filter: invert(100%);
+  }
+
+  .ActionButton {
+    @include dim(20px);
+
+    fill: $color-black;
+
+    &[data-correct-position] {
+      margin-left: 4px;
+    }
+  }
+}
+
+@keyframes upPlayer {
+  0% {
+    transform: translateY($player-height);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
