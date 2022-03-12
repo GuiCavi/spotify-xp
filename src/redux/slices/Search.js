@@ -22,6 +22,9 @@ const SearchSlice = createSlice({
     setSearchResults: (state, action) => {
       state.searchResults = action.payload;
     },
+    setSelectedAlbumTracks: (state, action) => {
+      state.selectedAlbumTracks = { items: [action.payload] };
+    },
     clearSearch: (state) => {
       state.searchQuery = "";
     },
@@ -52,7 +55,7 @@ const SearchSlice = createSlice({
 });
 
 export const {
-  setSearchQuery, setSearchResults, clearSearch, clearTracks,
+  setSearchQuery, setSearchResults, clearSearch, clearTracks, setSelectedAlbumTracks,
 } = SearchSlice.actions;
 
 export default SearchSlice.reducer;

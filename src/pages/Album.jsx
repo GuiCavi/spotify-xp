@@ -8,7 +8,7 @@ import {
 } from "../components";
 import { setPlaylist } from "../redux/slices/Player";
 import {
-  clearTracks, getTracksByAlbumId, useSelectedAlbumTracks,
+  clearTracks, getTracksByAlbumId, setSelectedAlbumTracks, useSelectedAlbumTracks,
 } from "../redux/slices/Search";
 
 import styles from "./styles/Album.module.scss";
@@ -21,7 +21,11 @@ const Album = () => {
   const album = location.state;
 
   useEffect(() => {
-    dispatch(getTracksByAlbumId(album.id));
+    if (album.type === "album") {
+      dispatch(getTracksByAlbumId(album.id));
+    } else if (album.type === "track") {
+      dispatch(setSelectedAlbumTracks(album));
+    }
 
     return () => {
       dispatch(clearTracks());
