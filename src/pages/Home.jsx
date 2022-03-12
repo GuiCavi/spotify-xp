@@ -29,7 +29,7 @@ const Home = () => {
 
   const resultsTest = debounceQueryString.length > 0
     ? `Resultados encontrados para "${debounceQueryString}"`
-    : "Álbuns buscados recentemente";
+    : "Faça uma busca para aparecer os resultados";
 
   const searchResults = albums?.items.concat(tracks?.items);
 
