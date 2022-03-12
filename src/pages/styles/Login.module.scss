@@ -1,7 +1,5 @@
 @import "../../styles/global";
 
-$button-height: 40px;
-
 .LoginContainer {
   width: 100%;
   max-width: 400px;
@@ -26,6 +24,10 @@ $button-height: 40px;
     @extend .Text,
     .section-title,
     .center;
+
+    line-height: 1.5;
+    letter-spacing: 2px;
+    font-weight: 100;
   }
 
   .TextContainer {
@@ -34,27 +36,5 @@ $button-height: 40px;
     flex-direction: column;
     align-items: center;
     gap: 40px;
-  }
-}
-
-.Button {
-  background-color: $button-primary;
-  border-color: $button-primary;
-  color: #fff;
-  border: 0;
-  outline: 0;
-  height: $button-height;
-  width: 100%;
-  cursor: pointer;
-
-  padding: 12px 24px;
-  border-radius: $button-height / 2;
-
-  transition: all 0.3s ease-in-out;
-
-  &:hover {
-    background-color: darken($button-primary, 5%);
-    border-color: darken($button-primary, 5%);
-    color: #fff;
   }
 }

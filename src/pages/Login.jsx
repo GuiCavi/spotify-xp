@@ -1,5 +1,6 @@
-import PropTypes from "prop-types";
 import { useCallback } from "react";
+
+import { Button } from "../components";
 
 import styles from "./styles/Login.module.scss";
 
@@ -24,15 +25,6 @@ const LoginPage = () => {
       <Button type="submit" onClick={handleLoginSpotify}>Entrar</Button>
     </div>
   );
-};
-
-const Button = ({ children, onClick }) => (
-  <button className={styles.Button} type="submit" onClick={onClick}>{children}</button>
-);
-
-Button.propTypes = {
-  children: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
 };
 
 export default LoginPage;
