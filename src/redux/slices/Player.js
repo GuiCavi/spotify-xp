@@ -22,12 +22,20 @@ const PlayerSlice = createSlice({
       state.isPlaying = true;
     },
     nextSong: (state) => {
-      state.currentSongIndex += 1;
-      state.currentSong = state.playlist[state.currentSongIndex];
+      if (state.currentSongIndex + 1 >= state.playlist.length) {
+        state.isPlaying = false;
+      } else {
+        state.currentSongIndex += 1;
+        state.currentSong = state.playlist[state.currentSongIndex];
+      }
     },
     prevSong: (state) => {
-      state.currentSongIndex -= 1;
-      state.currentSong = state.playlist[state.currentSongIndex];
+      if (state.currentSongIndex - 1 < 0) {
+        state.isPlaying = false;
+      } else {
+        state.currentSongIndex -= 1;
+        state.currentSong = state.playlist[state.currentSongIndex];
+      }
     },
   },
 });

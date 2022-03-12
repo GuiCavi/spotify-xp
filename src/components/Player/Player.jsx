@@ -1,9 +1,12 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import PropTypes from "prop-types";
 import React, { useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 
 import { useAudioController } from "../../hooks";
-import { useCurrentSong, useIsPlaying } from "../../redux/slices/Player";
+import {
+  nextSong, useCurrentSong, useIsPlaying,
+} from "../../redux/slices/Player";
 
 import CurrentSongInfo from "./CurrentSongInfo";
 import styles from "./Player.module.scss";
@@ -31,6 +34,7 @@ const AudioController = ({ currentSong }) => {
   const audioController = useAudioController();
   const isPlaying = useIsPlaying();
   const firstRender = useRef(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!isPlaying) {
@@ -45,6 +49,20 @@ const AudioController = ({ currentSong }) => {
       audioController.next(currentSong.preview_url);
     }
   }, [currentSong]);
+
+  useEffect(() => {
+    const handleEndSong = () => {
+      dispatch(nextSong());
+    };
+
+    if (audioController.audioRef.current) {
+      audioController.audioRef.current.addEventListener("ended", handleEndSong);
+    }
+
+    return () => {
+      audioController.audioRef.current.removeEventListener("ended", handleEndSong);
+    };
+  }, []);
 
   useEffect(() => {
     firstRender.current = false;
