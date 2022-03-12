@@ -23,11 +23,13 @@
 }
 
 .TrackItem {
+  transition: all .4s ease;
+
   .TrackName {
     flex: 1;
     @extend .Text,
     .caption-emphasis;
-    font-weight: 400;
+    font-weight: 300;
 
     text-align: left;
   }

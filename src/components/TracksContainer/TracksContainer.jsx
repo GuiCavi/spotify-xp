@@ -1,8 +1,10 @@
 import PropTypes from "prop-types";
+import { useRef } from "react";
+import Lottie from "react-lottie";
 
+import volumeEqAnimationData from "../../assets/lotties/volume-eq.json";
 import { Duration } from "../../data/usecases/Duration";
 import { useCurrentSong } from "../../redux/slices/Player";
-import { useSelectedAlbumTracks } from "../../redux/slices/Search";
 
 import styles from "./TracksContainer.module.scss";
 
@@ -45,9 +47,23 @@ const TrackItem = ({ track, selected }) => {
     classname.push(styles.TrackItemSelected);
   }
 
+  const defaultOptions = useRef({
+    loop: true,
+    autoplay: true,
+    animationData: volumeEqAnimationData,
+    rendererSettings: { preserveAspectRatio: "xMidYMid slice" },
+  });
+
   return (
     <li className={classname.join(" ")}>
       <span className={styles.TrackName}>{track.name}</span>
+      {selected && (
+        <Lottie
+          options={defaultOptions.current}
+          width={40}
+          height={14}
+        />
+      )}
       <span className={styles.TrackDuration}>{Duration.format(track.duration_ms)}</span>
     </li>
   );
