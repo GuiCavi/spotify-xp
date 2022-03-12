@@ -1,9 +1,15 @@
+@import "../../styles/global";
+
 .Container {
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100vh;
   overflow: hidden;
+
+  &.PlayerOpen {
+    height: calc(100vh - #{$player-height});
+  }
 }
 
 .MainContent {
