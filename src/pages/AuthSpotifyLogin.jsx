@@ -1,9 +1,13 @@
 import { useEffect } from "react";
+import Lottie from "react-lottie";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { useSpotifyAuthData } from "../hooks";
+import loadingAnimationData from "../assets/lotties/loading-page.json";
+import { useRandomMessage, useSpotifyAuthData } from "../hooks";
 import { setData } from "../redux/slices/Auth";
+
+import styles from "./styles/AuthSpotifyLogin.module.scss";
 
 const AuthSpotifyLogin = () => {
   const navigate = useNavigate();
@@ -15,6 +19,7 @@ const AuthSpotifyLogin = () => {
     if (error) {
       // TODO: Show error
       console.log(error);
+      navigate("/");
     } else {
       const saveData = {
         ...spotifyAuthData,
@@ -22,12 +27,33 @@ const AuthSpotifyLogin = () => {
       };
 
       localStorage.setItem("auth_data", JSON.stringify(saveData));
-      dispatch(setData(saveData));
+      setTimeout(() => {
+        dispatch(setData(saveData));
+        navigate("/");
+      }, Math.max(3000, Math.ceil(Math.random() * 6000)));
     }
-    setTimeout(() => navigate("/"), 1500);
   }, []);
 
-  return <span>Carregando...</span>;
+  const randomMessage = useRandomMessage();
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: loadingAnimationData,
+    rendererSettings: { preserveAspectRatio: "xMidYMid slice" },
+  };
+
+  return (
+    <div>
+      <Lottie
+        options={defaultOptions}
+        height={400}
+        width={400}
+      />
+
+      <div className={styles.LoadingText}>{randomMessage}</div>
+    </div>
+  );
 };
 
 export default AuthSpotifyLogin;
