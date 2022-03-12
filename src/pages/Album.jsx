@@ -18,13 +18,13 @@ const Album = () => {
   const dispatch = useDispatch();
   const tracks = useSelectedAlbumTracks();
 
-  const album = location.state;
+  const data = location.state;
 
   useEffect(() => {
-    if (album.type === "album") {
-      dispatch(getTracksByAlbumId(album.id));
-    } else if (album.type === "track") {
-      dispatch(setSelectedAlbumTracks(album));
+    if (data.type === "album") {
+      dispatch(getTracksByAlbumId(data.id));
+    } else if (data.type === "track") {
+      dispatch(setSelectedAlbumTracks(data));
     }
 
     return () => {
@@ -42,8 +42,12 @@ const Album = () => {
 
       <section className={styles.AlbumContent}>
         <aside className={styles.AlbumAside}>
-          <SearchCard searchItem={album} />
-          <Button className={styles.Button} onClick={handlePlayAlbum}>Tocar álbum</Button>
+          <SearchCard searchItem={data} />
+          <Button className={styles.Button} onClick={handlePlayAlbum}>
+            Tocar
+            {" "}
+            {data.type === "album" ? "álbum" : "faixa"}
+          </Button>
         </aside>
 
         <TracksContainer tracks={tracks} />
