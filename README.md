@@ -8,8 +8,9 @@ After you finished setting up the environment variables, to run the project just
 
 `yarn` - to install the dependencies
 
-`yarn start` - to run development env
+`sxp init` - it will ask for the environment variables needed to run the project
 
+`sxp run (or yarn start)` - to run development env
 
 ## Environment variables
 
