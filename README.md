@@ -6,11 +6,13 @@
 
 After you finished setting up the environment variables, to run the project just use the commands
 
-`yarn` - to install the dependencies
+1. `yarn` - to install the dependencies
 
-`sxp init` - it will ask for the environment variables needed to run the project
+1. `yarn link` - to link the custom CLI
 
-`sxp run (or yarn start)` - to run development env
+1. `sxp init` - it will ask for the environment variables needed to run the project
+
+1. `sxp run or yarn start` - to run development env
 
 ## Environment variables
 
