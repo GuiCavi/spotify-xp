@@ -23,5 +23,7 @@ function render(
 
 // re-export everything
 export * from "@testing-library/react";
+
+export const sleep = (ms = 500) => new Promise((resolve) => setTimeout(resolve, ms));
 // override render method
 export { render };
