@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Lottie from "react-lottie";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import loadingAnimationData from "../assets/lotties/loading-page.json";
 import { useRandomMessage, useSpotifyAuthData } from "../hooks";
@@ -12,8 +12,9 @@ import styles from "./styles/AuthSpotifyLogin.module.scss";
 const AuthSpotifyLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
-  const { error, spotifyAuthData } = useSpotifyAuthData();
+  const { error, spotifyAuthData } = useSpotifyAuthData(location);
 
   useEffect(() => {
     if (error) {
