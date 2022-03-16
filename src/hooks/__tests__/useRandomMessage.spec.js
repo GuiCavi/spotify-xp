@@ -4,6 +4,10 @@ import { sleep } from "../../test/test-utils";
 import { useRandomMessage } from "../useRandomMessage";
 
 describe("useRandomMessasge", () => {
+  it("should be a function", () => {
+    expect(typeof useRandomMessage).toBe("function");
+  });
+
   it("should return the initial value", async () => {
     const { result } = renderHook(() => useRandomMessage());
 

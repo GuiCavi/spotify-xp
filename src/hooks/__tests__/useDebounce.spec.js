@@ -4,6 +4,10 @@ import { sleep } from "../../test/test-utils";
 import { useDebounce } from "../useDebounce";
 
 describe("useDebounce", () => {
+  it("should be a function", () => {
+    expect(typeof useDebounce).toBe("function");
+  });
+
   it("should return the initial value", async () => {
     const { result } = renderHook(() => useDebounce(1));
 
